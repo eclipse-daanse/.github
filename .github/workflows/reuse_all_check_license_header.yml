@@ -2,10 +2,9 @@ name: License Header Check
 
 on:
   workflow_call:
-    workflow_call:
-      secrets:
-        envGH:
-          required: true
+    secrets:
+      envGH:
+        required: true
 
 jobs:
   build:
