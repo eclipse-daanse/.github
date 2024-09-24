@@ -2,9 +2,10 @@ name: License Header Check
 
 on:
   workflow_call:
-    secrets:
-      DELEGATED_GITHUB_TOKEN:
-        required: false
+    workflow_call:
+      secrets:
+        envGH:
+          required: true
 
 jobs:
   build:
@@ -14,4 +15,4 @@ jobs:
       - name: Check License Header
         uses: apache/skywalking-eyes@cd7b195c51fd3d6ad52afceb760719ddc6b3ee91 # v0.6.0
         env:
-            GITHUB_TOKEN: ${{ secrets.DELEGATED_GITHUB_TOKEN }}  # needed only when you want License-Eye to comment on the pull request.
+            GITHUB_TOKEN: ${{ secrets.envGH }}  # needed only when you want License-Eye to comment on the pull request.
