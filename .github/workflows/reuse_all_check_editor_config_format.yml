@@ -5,7 +5,7 @@ permissions: { }
 on:
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
+      DELEGATED_GITHUB_TOKEN:
         required: false
 
 jobs:
@@ -31,5 +31,5 @@ jobs:
         VALIDATE_ALL_CODEBASE: false
         VALIDATE_EDITORCONFIG: true
         DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.DELEGATED_GITHUB_TOKEN }}
         VALIDATE_MARKDOWN: true

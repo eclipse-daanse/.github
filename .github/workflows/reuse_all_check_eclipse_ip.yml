@@ -3,7 +3,7 @@ name: Eclipse-Dash IP-Check
 on:
   workflow_call:
     secrets:
-      GITLAB_API_TOKEN:
+      DELEGATED_GITLAB_API_TOKEN:
         required: false
 
   jobs:
@@ -14,4 +14,4 @@ on:
       with:
         projectId: technology.daanse
       secrets:
-        gitlabAPIToken: ${{ secrets.GITLAB_API_TOKEN }}
+        gitlabAPIToken: ${{ secrets.DELEGATED_GITLAB_API_TOKEN }}
