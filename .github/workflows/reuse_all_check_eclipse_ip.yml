@@ -6,12 +6,12 @@ on:
       DELEGATED_GITLAB_API_TOKEN:
         required: false
 
-  jobs:
-    call-license-check:
-      permissions:
-        pull-requests: write
-      uses: eclipse-dash/dash-licenses/.github/workflows/mavenLicenseCheck.yml@90ebdf14dff066293b65b9d3ca99c8fb90d5222b # 1.1.0
-      with:
-        projectId: technology.daanse
-      secrets:
-        gitlabAPIToken: ${{ secrets.DELEGATED_GITLAB_API_TOKEN }}
+jobs:
+  call-license-check:
+    permissions:
+      pull-requests: write
+    uses: eclipse-dash/dash-licenses/.github/workflows/mavenLicenseCheck.yml@90ebdf14dff066293b65b9d3ca99c8fb90d5222b # 1.1.0
+    with:
+      projectId: technology.daanse
+    secrets:
+      gitlabAPIToken: ${{ secrets.DELEGATED_GITLAB_API_TOKEN }}
