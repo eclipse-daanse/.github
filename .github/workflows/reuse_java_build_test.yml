@@ -8,6 +8,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged # allow exec of Docker-in-Docker
+        ports:
+          - 2375:2375 # Docker port exposed
+
     steps:
     - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
     - name: Set up JDK 21
