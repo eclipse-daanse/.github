@@ -28,6 +28,12 @@ jobs:
           docker info
     - name: Build with Maven
       run: mvn -B verify --file pom.xml
+    - name: Upload JAR Files
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      with:
+        name: jar-files
+        path: |
+          **/target/*.jar
     - name: Upload Test Reports
       if:  always()
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
