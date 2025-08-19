@@ -1,10 +1,7 @@
 name: Deploy Maven
 
 on:
-  workflow_run:
-    workflows: ["Java Build, Test"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   publish:
