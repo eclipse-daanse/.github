@@ -31,9 +31,10 @@ jobs:
     - name: Upload JAR Files
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
       with:
-        name: jar-files
         path: |
-          **/target/*.jar
+          ~/.m2/repository
+          **/target
+        key: build-${{ runner.os }}-${{ github.sha }}
     - name: Upload Test Reports
       if:  always()
       uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
