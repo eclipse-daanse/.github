@@ -18,4 +18,4 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
     - name: Build with Maven
-      run: mvn -Pjavadoc-check -B package --file pom.xml
+      run: mvn -Pjavadoc-check -B -Dmaven.test.skip=true package --file pom.xml
