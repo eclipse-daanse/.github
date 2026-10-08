@@ -39,7 +39,7 @@ jobs:
         # -DskipTests only stops surefire; bnd-resolver and bnd-testing are bound to
         # pre-integration-test/integration-test and still ran on every deploy.
         run: >-
-          mvn -Pdeploy --no-transfer-progress --batch-mode deploy
+          mvn -Pdeploy --no-transfer-progress --batch-mode -U deploy
           -DskipTests -Dbnd.testing.skip=true -Dbnd.resolve.skip=true
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_SONATYPE_TOKEN_USERNAME }}
