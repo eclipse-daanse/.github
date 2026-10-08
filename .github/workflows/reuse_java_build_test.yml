@@ -132,7 +132,7 @@ jobs:
       run: |
         set -euo pipefail
         # shellcheck disable=SC2086  # EXTRA_ARGS is intentionally word-split
-        mvn -B --no-transfer-progress install --file pom.xml \
+        mvn -B --no-transfer-progress -U install --file pom.xml \
             -DskipTests \
             -Dbnd.testing.skip=true \
             -Dbnd.resolve.skip=true \
