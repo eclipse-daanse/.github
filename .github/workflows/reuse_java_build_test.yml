@@ -140,7 +140,7 @@ jobs:
 
     # Saved before anything else can touch target/, and only here.
     - name: Save Maven build artifacts to cache
-      uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: |
           ~/.m2/repository/org/eclipse/daanse
