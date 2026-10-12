@@ -38,9 +38,17 @@ jobs:
       - name: deploy
         # -DskipTests only stops surefire; bnd-resolver and bnd-testing are bound to
         # pre-integration-test/integration-test and still ran on every deploy.
+        # TEMPORARY -Dmaven.repository.credentialScope=id: Maven 3.10 (runner image)
+        # offers server credentials only to the origins bound to the id, and the id
+        # central is bound to repo.maven.apache.org, so the token never reaches
+        # central.sonatype.com (HTTP 401). Remove it once setup-java ships
+        # mvn-server-repository-origins (actions/setup-java#1282, release asked in
+        # actions/setup-java#1284) and set
+        #   mvn-server-repository-origins: central:https://central.sonatype.com
         run: >-
           mvn -Pdeploy --no-transfer-progress --batch-mode -U deploy
           -DskipTests -Dbnd.testing.skip=true -Dbnd.resolve.skip=true
+          -Dmaven.repository.credentialScope=id
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_SONATYPE_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_SONATYPE_TOKEN_PASSWORD }}
