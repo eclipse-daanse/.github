@@ -45,10 +45,28 @@ jobs:
         # mvn-server-repository-origins (actions/setup-java#1282, release asked in
         # actions/setup-java#1284) and set
         #   mvn-server-repository-origins: central:https://central.sonatype.com
-        run: >-
-          mvn -Pdeploy --no-transfer-progress --batch-mode -U deploy
-          -DskipTests -Dbnd.testing.skip=true -Dbnd.resolve.skip=true
-          -Dmaven.repository.credentialScope=id
+        #
+        # A release goes through the deploy profile and the central-publishing plugin,
+        # which bundles, signs and publishes it. A snapshot goes without that profile,
+        # through the Maven deploy plugin to the snapshotRepository of the parent pom:
+        # the central-publishing plugin uploads a snapshot file by file, each with its
+        # own round of metadata and checksums, and stops at the first refusal, so the
+        # rate limit of the snapshot repository (HTTP 429) cuts a large reactor short
+        # at the same file every time. The deploy plugin uploads the metadata once per
+        # module. A snapshot has no signatures, sources or javadoc, and only SHA-1
+        # checksums; the snapshot repository asks for none of them.
+        run: |
+          version=$(mvn --batch-mode --no-transfer-progress --non-recursive -q \
+            help:evaluate -Dexpression=project.version -DforceStdout)
+          echo "Deploying version ${version}"
+          args=(--no-transfer-progress --batch-mode -U deploy
+            -DskipTests -Dbnd.testing.skip=true -Dbnd.resolve.skip=true
+            -Dmaven.repository.credentialScope=id)
+          if [[ "${version}" == *-SNAPSHOT ]]; then
+            mvn "${args[@]}" -Daether.checksums.algorithms=SHA-1
+          else
+            mvn -Pdeploy "${args[@]}"
+          fi
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_SONATYPE_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_SONATYPE_TOKEN_PASSWORD }}
